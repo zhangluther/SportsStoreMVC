@@ -9,31 +9,18 @@
 
 @using (Html.BeginForm())
 {
+    @Html.ValidationSummary()
     <h3>Ship to</h3>
-    <div class="form-group">Name:</div>
-    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-
-    <h3>Address</h3>
-    <div class="form-group">Line1:</div>
-    @Html.TextBoxFor(x => x.Line1, new { @class = "form-control" })
-
-    <div class="form-group">Line2:</div>
-    @Html.TextBoxFor(x => x.Line2, new { @class = "form-control" })
-
-    <div class="form-group">Line3:</div>
-    @Html.TextBoxFor(x=>x.Line3,new {@class="form-control"})
-
-    <div class="form-group">City:</div>
-    @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
-
-    <div class="form-group">State:</div>
-    @Html.TextBoxFor(x => x.State, new { @class = "form-control" })
-
-    <div class="form-group">Zip:</div>
-    @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
-
-    <div class="form-group">Country:</div>
-    @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
+    foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
+        {
+            <div class="form-group">
+                <label>@(property.DisplayName ?? property.PropertyName)</label>
+                @Html.TextBox(property.PropertyName, null, new {@class="form-control"})
+            </div>
+        }
+    }
 
     <h3>Options</h3>
     <div class="checkbox">
